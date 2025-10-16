@@ -9,4 +9,5 @@ class UserModule extends Model
 {
     /** @use HasFactory<\Database\Factories\UserModuleFactory> */
     use HasFactory;
+
 }

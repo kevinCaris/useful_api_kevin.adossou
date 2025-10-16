@@ -15,9 +15,10 @@ class Modules extends Model
         'description',
     ];
 
-
-    public function users():BelongsToMany
+  public function users()
     {
-        return $this->belongsToMany(Users::class, 'users_modules');
+        return $this->belongsToMany(user::class, 'user_modules')
+            ->withPivot('active')
+            ->withTimestamps();
     }
 }

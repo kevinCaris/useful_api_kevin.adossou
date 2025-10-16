@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('user_modules', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('module_id')->constrained('modules')->onDelete('cascade');
-            $table->unique(['user_id', 'module_id']);
-            $table->boolean('active');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('modules_id')->constrained('modules')->cascadeOnDelete(); // ✅ pas modules_id
+            $table->boolean('active')->default(false);
+
             $table->timestamps();
         });
     }
