@@ -11,7 +11,7 @@ class CheckModuleActive
     {
         $user = auth()->user();
 
-        $module = $user->modules()->where('module_id', $moduleId)->where('active', true)->first();
+        $module = $user->modules()->where('modules_id', $moduleId)->where('active', true)->first();
 
         if (!$module) {
             return response()->json(['error' => 'Module inactive. Please activate this module to use it.'], 403);
