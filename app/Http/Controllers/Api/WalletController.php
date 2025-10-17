@@ -26,7 +26,8 @@ class WalletController extends Controller
 
     public function transfer(WalletTransferRequest $request)
     {
-        $senderWallet = Wallet::firstOrFail(['user_id' => auth()->id()]);
+        $senderWallet = Wallet::where('user_id', auth()->id())->firstOrFail();
+        
         $receiverWallet = Wallet::firstOrCreate(['user_id' => $request->receiver_id], ['balance' => 0]);
 
         if ($senderWallet->balance < $request->amount) {
@@ -54,6 +55,40 @@ class WalletController extends Controller
             'created_at' => now()->toISOString(),
         ], 201);
     }
+    public function topup(WalletTopupRequest $request)
+    {
+        $wallet = Wallet::firstOrCreate(
+            ['user_id' => auth()->id()],
+            ['balance' => 0]
+        );
 
+        DB::transaction(function () use ($wallet, $request) {
+            $wallet->increment('balance', $request->amount);
+
+            Transaction::create([
+                'sender_id' => $wallet->user_id,
+                'receiver_id' => $wallet->user_id,
+                'amount' => $request->amount,
+                'status' => 'success',
+            ]);
+        });
+
+        return response()->json([
+            'user_id' => $wallet->user_id,
+            'balance' => $wallet->balance,
+            'topup_amount' => $request->amount,
+            'created_at' => now()->toISOString(),
+        ], 201);
+    }
+
+    public function transactions()
+    {
+        $transactions = Transaction::where('sender_id', auth()->id())
+            ->orWhere('receiver_id', auth()->id())
+            ->orderByDesc('created_at')
+            ->get();
+
+        return response()->json($transactions);
+    }
 
 }
