@@ -56,17 +56,79 @@
 
           Modules
           <router-link
-            to="/Board"
+            to=""
             active-class=""
             :class="[
               'flex items-center h-12 rounded-md font-semibold  text-white',
               isCollapsed ? 'justify-center px-0' : 'px-3',
             ]"
+            v-if="modulesStore.isActiveModule"
           >
             <span class="inline-flex items-center mr-2"></span>
             <span v-if="!isCollapsed" class="lg:block hover:text-orange-300 transition"
-              >Workspace</span
+              >WURL Shortener</span
             >
+          </router-link>
+
+          <router-link
+            to=""
+            active-class=""
+            :class="[
+              'flex items-center h-12 rounded-md font-semibold  text-white',
+              isCollapsed ? 'justify-center px-0' : 'px-3',
+            ]"
+             v-if="modulesStore.isActiveModule"
+          >
+            <span class="inline-flex items-center mr-2"></span>
+            <span v-if="!isCollapsed" class="lg:block hover:text-orange-300 transition"
+              >Wallet</span
+            >
+          </router-link>
+
+          <router-link
+            to=""
+            active-class=""
+            :class="[
+              'flex items-center h-12 rounded-md font-semibold  text-white',
+              isCollapsed ? 'justify-center px-0' : 'px-3',
+            ]"
+             v-if="modulesStore.isActiveModule"
+          >
+            <span class="inline-flex items-center mr-2"></span>
+            <span v-if="!isCollapsed" class="lg:block hover:text-orange-300 transition"
+              >WMarketplace</span
+            >
+          </router-link>
+
+          <router-link
+            to=""
+            active-class=""
+            :class="[
+              'flex items-center h-12 rounded-md font-semibold  text-white',
+              isCollapsed ? 'justify-center px-0' : 'px-3',
+            ]"
+             v-if="modulesStore.isActiveModule"
+          >
+            <span class="inline-flex items-center mr-2"></span>
+            <span v-if="!isCollapsed" class="lg:block hover:text-orange-300 transition"
+              >Time Tracker</span
+            >
+          </router-link>
+
+          <router-link
+            to=""
+            active-class=""
+            :class="[
+              'flex items-center h-12 rounded-md font-semibold  text-white',
+              isCollapsed ? 'justify-center px-0' : 'px-3',
+            ]"
+             v-if="modulesStore.isActiveModule"
+          >
+            <span class="inline-flex items-center mr-2"></span>
+            <span v-if="!isCollapsed" class="lg:block hover:text-orange-300 transition"
+              >Investment Tracker</span
+            >
+            
           </router-link>
         </div>
 
@@ -145,6 +207,10 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 const isCollapsed = ref(false)
 const authStore = useAuthStore()
+
+import { useModuleStore } from "@/stores/moduleStore";
+
+const modulesStore = useModuleStore();
 
 const router = useRouter()
 
